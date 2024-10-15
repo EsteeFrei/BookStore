@@ -32,7 +32,31 @@ function createTable(data) {
     const headers = ['ID', 'Title', 'Price', 'Actions'];
     headers.forEach(headerText => {
         const th = document.createElement('th');
-        th.textContent = headerText;
+
+        const headerDiv = document.createElement('div');
+        headerDiv.style.display = 'flex'; // שימוש ב-flexbox
+        headerDiv.style.alignItems = 'center'; // מרכז את הכפתור עם הכותרת
+
+        const headerLabel = document.createElement('span');
+        headerLabel.textContent = headerText;
+        headerDiv.appendChild(headerLabel);
+
+        //יצירת כפתורי סינון
+        if (headerText === 'Title' || headerText === 'Price') {
+            const button = document.createElement('button');
+            button.textContent = '🔽';
+            button.style.marginLeft = '5px';
+            button.onclick = () => {
+                if (headerText === 'Title') {
+                    filterByTitle(data);
+                } else {
+                    filterByPrice(data);
+                }
+            };
+            headerDiv.appendChild(button);
+        }
+        th.appendChild(headerDiv)
+
         headerRow.appendChild(th);
     });
 
@@ -95,6 +119,16 @@ function createTable(data) {
     //return table;
     tableContainer.appendChild(table);
     createPagination(data.length);
+}
+
+function filterByTitle(data) {
+    const sortedData = data.sort((a, b) => a.title.localeCompare(b.title));
+    createTable(sortedData);
+}
+
+function filterByPrice(data) {
+    const sortedData = data.sort((a, b) => a.price - b.price);
+    createTable(sortedData);
 }
 
 function createPagination(totalItems) {

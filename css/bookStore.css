@@ -27,7 +27,7 @@ h2 {
 }
 
 #tableContainer {
-    width: 1300px;
+    width: 100%;
     margin-right: 20px;
     background-color: white;
     border-radius: 8px;
@@ -75,7 +75,7 @@ tr:hover {
 }
 
 #bookDetails {
-    max-width: 400px;
+    max-width: 150px;
     padding: 20px;
     background-color: white;
     border-radius: 8px;
