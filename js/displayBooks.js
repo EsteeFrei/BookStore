@@ -1,6 +1,11 @@
 import initialData from '.././books.json' with {type: "json"};
 
 let all_books;
+let currentPage = 1;
+const itemsPerPage = 7;
+
+let books = loadBooks();
+renderTable(books); 
 
 function loadBooks() {
     all_books = JSON.parse(localStorage.getItem('books')) || [];
@@ -17,10 +22,10 @@ function saveBooks(books) {
     localStorage.setItem('books', JSON.stringify(books));
 }
 
-let currentRating = 0;
-let currentBookId = null;
-
 function createTable(data) {
+    const tableContainer = document.getElementById('tableContainer');
+    tableContainer.innerHTML = '';
+
     const table = document.createElement('table');
     const headerRow = document.createElement('tr');
 
@@ -32,7 +37,13 @@ function createTable(data) {
     });
 
     table.appendChild(headerRow);
-    data.forEach(item => {
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const paginatedData = data.slice(startIndex, endIndex);
+
+    
+    paginatedData.forEach(item => {
         const row = document.createElement('tr');
 
         const idCell = document.createElement('td');
@@ -81,7 +92,47 @@ function createTable(data) {
         table.appendChild(row);
     });
 
-    return table;
+    //return table;
+    tableContainer.appendChild(table);
+    createPagination(data.length);
+}
+
+function createPagination(totalItems) {
+    const paginationContainer = document.getElementById('paginationContainer');
+    paginationContainer.innerHTML = ''; 
+
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+    if (currentPage > 1) {
+        const prevButton = document.createElement('button');
+        prevButton.textContent = 'Previous';
+        prevButton.onclick = () => changePage(currentPage - 1);
+        paginationContainer.appendChild(prevButton);
+    }
+
+    for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.textContent = i;
+        pageButton.classList.add('pageButton')
+        pageButton.onclick = () => changePage(i);
+        if (i === currentPage) {
+            pageButton.disabled = true; 
+        }
+        paginationContainer.appendChild(pageButton);
+    }
+
+    if (currentPage < totalPages) {
+        const nextButton = document.createElement('button');
+        nextButton.textContent = 'Next';
+        nextButton.onclick = () => changePage(currentPage + 1);
+        paginationContainer.appendChild(nextButton);
+    }
+}
+
+function changePage(pageNumber) {
+    currentPage = pageNumber;
+    let a= loadBooks()
+    createTable(a); 
 }
 
 function showBookDetails(book) {
@@ -105,18 +156,6 @@ function showBookDetails(book) {
 
     currentBookId = book.id;
 }
-
-document.getElementById('decreaseRating').onclick = () => {
-    if (currentRating > 0) {
-        currentRating--;
-        updateRatingDisplay();
-    }
-};
-
-document.getElementById('increaseRating').onclick = () => {
-    currentRating++;
-    updateRatingDisplay();
-};
 
 function updateRatingDisplay() {
     document.getElementById('ratingValue').textContent = currentRating;
@@ -151,6 +190,39 @@ function updateBook(book) {
     }
 }
 
+function clearAddBookForm() {
+    document.getElementById('bookTitleInput').value = '';
+    document.getElementById('bookPriceInput').value = '';
+    document.getElementById('bookImageInput').value = '';
+}
+
+function clearBookDetails() {
+    document.getElementById('bookTitle').textContent = "Select a book to see the details.";
+    document.getElementById('bookImage').style.display = 'none';
+    document.getElementById('bookPrice').textContent = "";
+    document.getElementById('ratingValue').textContent = "0";
+}
+
+function renderTable(data) {
+
+    const tableContainer = document.getElementById('tableContainer');
+    tableContainer.innerHTML = '';
+    const table = createTable(data);
+    tableContainer.appendChild(table);
+}
+
+document.getElementById('decreaseRating').onclick = () => {
+    if (currentRating > 0) {
+        currentRating--;
+        updateRatingDisplay();
+    }
+};
+
+document.getElementById('increaseRating').onclick = () => {
+    currentRating++;
+    updateRatingDisplay();
+};
+
 document.getElementById('addBookButton').onclick = () => {
     document.getElementById('addBookModal').style.display = 'flex';
 };
@@ -174,36 +246,15 @@ document.getElementById('submitBookButton').onclick = () => {
             img,
             description
         };
-        books.push(newBook);
-        saveBooks(books);
-        renderTable(books);
         document.getElementById('addBookModal').style.display = 'none';
         clearAddBookForm();
+        books.push(newBook);
+        saveBooks(books);
+        renderTable(books);  
     } else {
         alert("Please enter valid details.");
     }
 };
 
-function clearAddBookForm() {
-    document.getElementById('bookTitleInput').value = '';
-    document.getElementById('bookPriceInput').value = '';
-    document.getElementById('bookImageInput').value = '';
-}
 
-function clearBookDetails() {
-    document.getElementById('bookTitle').textContent = "Select a book to see the details.";
-    document.getElementById('bookImage').style.display = 'none';
-    document.getElementById('bookPrice').textContent = "";
-    document.getElementById('ratingValue').textContent = "0";
-}
 
-function renderTable(data) {
-
-    const tableContainer = document.getElementById('tableContainer');
-    tableContainer.innerHTML = '';
-    const table = createTable(data);
-    tableContainer.appendChild(table);
-}
-
-let books = loadBooks();
-renderTable(books); 

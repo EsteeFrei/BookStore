@@ -1,38 +1,49 @@
-
-
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
     padding: 10px;
     display: flex;
-    background: linear-gradient(to right, #f4f4f4, #e0e0e0);
-    
+    background-image: url('../imgs/Logush.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.8;
 }
 
 h1 {
     display: block;
     font-family: 'Roboto', sans-serif;
     font-size: 36px;
-    color: #333;
+    color: #454f7a;
     margin-bottom: 20px;
     text-align: center;
     width: 100%;
 }
 
-h2{
+h2 {
     font-family: 'Montserrat', sans-serif;
     font-size: 24px;
     color: #4CAF50;
 }
 
 #tableContainer {
-    width: 1200px;
+    width: 1300px;
     margin-right: 20px;
     background-color: white;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+
+}
+
+#paginationContainer {
+    width: 300px;
+    margin-bottom: 50px;
+}
+
+.pageButton {
+    display: flex;
+    margin: 2px;
 }
 
 table {
@@ -41,7 +52,8 @@ table {
     border: 2px solid #4CAF50;
 }
 
-th, td {
+th,
+td {
     border: 1px solid #ddd;
     padding: 15px;
     text-align: left;
@@ -113,11 +125,13 @@ button {
 .buttonContainer {
     display: flex;
     justify-content: space-between;
-    flex-direction: row; 
+    flex-direction: row;
 }
 
-.deleteButton, .updateButton, .readButton {
-    background-color: #f44336;
+.deleteButton,
+.updateButton,
+.readButton {
+    background-color: #5236f4;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -127,11 +141,11 @@ button {
 }
 
 .updateButton {
-    background-color: #4CAF50;
+    background-color: #3254c6;
 }
 
 .readButton {
-    background-color: #2196F3;
+    background-color: #1c7fd0;
 }
 
 #addBookModal {
@@ -162,27 +176,27 @@ button {
 
 @media (max-width: 768px) {
     body {
-        flex-direction: column; 
+        flex-direction: column;
         padding: 10px;
     }
 
     #tableContainer {
-        width: 100%; 
+        width: 100%;
         margin-right: 0;
-        margin-bottom: 20px; 
+        margin-bottom: 20px;
     }
 
     h1 {
-        font-size: 24px; 
+        font-size: 24px;
     }
 
     #bookDetails {
-        max-width: 100%; 
-        margin: 0 auto; 
+        max-width: 100%;
+        margin: 0 auto;
     }
 
     #bookImage {
-        max-width: 80px; 
+        max-width: 80px;
     }
 
     button {
@@ -191,26 +205,27 @@ button {
     }
 
     .buttonContainer {
-        flex-direction: column; 
-        align-items: center; 
+        flex-direction: column;
+        align-items: center;
     }
 }
 
 @media (max-width: 480px) {
     h1 {
-        font-size: 20px; 
+        font-size: 20px;
     }
 
-    th, td {
-        padding: 10px; 
+    th,
+    td {
+        padding: 10px;
     }
 
     #bookImage {
-        max-width: 60px; 
+        max-width: 60px;
     }
 
     button {
         width: 100%;
-        margin: 5px 0; 
+        margin: 5px 0;
     }
 }
