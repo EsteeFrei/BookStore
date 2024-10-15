@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/bookStore.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1>Book Store</h1>
+
+    <button id="addBookButton">Add Book</button>
+
+    <div id="addBookModal" style="display: none;">
+        <div id="addBookForm">
+            <h2>Add New Book</h2>
+            <label for="bookTitle">Title:</label>
+            <input type="text" id="bookTitleInput">
+            <label for="bookPrice">Price:</label>
+            <input type="number" id="bookPriceInput">
+            <label for="bookImage">Image URL:</label>
+            <input type="text" id="bookImageInput">
+            <label for="bookDescription">Description:</label>
+            <input type="text" id="bookDescriptionInput"> 
+            <button id="submitBookButton">Submit</button>
+            <button id="cancelButton">Cancel</button>
+        </div>
+    </div>
+
+    <div id="tableContainer"></div>
+    <div id="bookDetails">
+        <h2 id="bookTitle">Select a book to see the details.</h2>
+        <div id="bookContent">
+            <img id="bookImage" src="" alt="" style="display:none;">
+            <div id="likeSection">
+                <span id="bookPrice"></span>
+            </div>
+        </div>
+
+        <div id="bookDescription" style="margin-top: 10px; color: #555; "></div>
+
+        <div id="ratingControls">
+            <button id="decreaseRating">-</button>
+            <span id="ratingValue">0</span>
+            <button id="increaseRating">+</button>
+        </div>
+    </div>
+</body>
+<script dafer type="module" src="../js/displayBooks.js"></script>
+
+</html>
