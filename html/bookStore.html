@@ -24,7 +24,7 @@
             <label for="bookImage">Image URL:</label>
             <input type="text" id="bookImageInput">
             <label for="bookDescription">Description:</label>
-            <input type="text" id="bookDescriptionInput"> 
+            <input type="text" id="bookDescriptionInput">
             <button id="submitBookButton">Submit</button>
             <button id="cancelButton">Cancel</button>
         </div>
@@ -32,7 +32,7 @@
 
     <div id="tableContainer"></div>
     <div id="paginationContainer"></div>
-    
+
     <div id="bookDetails">
         <h2 id="bookTitle">Select a book to see the details.</h2>
         <div id="bookContent">
@@ -41,18 +41,19 @@
                 <span id="bookPrice"></span>
             </div>
         </div>
-        
+
         <div id="bookDescription" style="margin-top: 10px; color: #555; "></div>
 
         <div id="ratingControls">
-            <button id="decreaseRating">-</button>
+            <button id='decreaseRating' onClick="">-</button>
             <span id="ratingValue">0</span>
             <button id="increaseRating">+</button>
         </div>
     </div>
-    
+
 
 </body>
-<script dafer type="module" src="../js/displayBooks.js"></script>
+
+<script type="module" src="../js/displayBooks.js"></script>
 
 </html>

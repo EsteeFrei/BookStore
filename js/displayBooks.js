@@ -2,10 +2,12 @@ import initialData from '.././books.json' with {type: "json"};
 
 let all_books;
 let currentPage = 1;
+let currentRating = 0
+let currentBookId=null
 const itemsPerPage = 7;
 
 let books = loadBooks();
-renderTable(books); 
+renderTable(books);
 
 function loadBooks() {
     all_books = JSON.parse(localStorage.getItem('books')) || [];
@@ -66,7 +68,7 @@ function createTable(data) {
     const endIndex = startIndex + itemsPerPage;
     const paginatedData = data.slice(startIndex, endIndex);
 
-    
+
     paginatedData.forEach(item => {
         const row = document.createElement('tr');
 
@@ -133,7 +135,7 @@ function filterByPrice(data) {
 
 function createPagination(totalItems) {
     const paginationContainer = document.getElementById('paginationContainer');
-    paginationContainer.innerHTML = ''; 
+    paginationContainer.innerHTML = '';
 
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -150,7 +152,7 @@ function createPagination(totalItems) {
         pageButton.classList.add('pageButton')
         pageButton.onclick = () => changePage(i);
         if (i === currentPage) {
-            pageButton.disabled = true; 
+            pageButton.disabled = true;
         }
         paginationContainer.appendChild(pageButton);
     }
@@ -165,8 +167,8 @@ function createPagination(totalItems) {
 
 function changePage(pageNumber) {
     currentPage = pageNumber;
-    let a= loadBooks()
-    createTable(a); 
+    let a = loadBooks()
+    createTable(a);
 }
 
 function showBookDetails(book) {
@@ -185,7 +187,7 @@ function showBookDetails(book) {
     description.textContent = book.description;
 
     const storedRating = localStorage.getItem(`rating-${book.id}`);
-    currentRating = storedRating ? parseInt(storedRating) : 0;
+    let currentRating = storedRating ? parseInt(storedRating) : 0;
     document.getElementById('ratingValue').textContent = currentRating;
 
     currentBookId = book.id;
@@ -196,7 +198,7 @@ function updateRatingDisplay() {
     if (currentBookId) {
         localStorage.setItem(`rating-${currentBookId}`, currentRating);
     }
-}
+ }
 
 function deleteBook(bookId) {
     const books = loadBooks();
@@ -238,14 +240,13 @@ function clearBookDetails() {
 }
 
 function renderTable(data) {
-
     const tableContainer = document.getElementById('tableContainer');
     tableContainer.innerHTML = '';
     const table = createTable(data);
-    tableContainer.appendChild(table);
+    //tableContainer.appendChild(table);
 }
 
-document.getElementById('decreaseRating').onclick = () => {
+document.getElementById('decreaseRating').onclick = function () {
     if (currentRating > 0) {
         currentRating--;
         updateRatingDisplay();
@@ -284,11 +285,12 @@ document.getElementById('submitBookButton').onclick = () => {
         clearAddBookForm();
         books.push(newBook);
         saveBooks(books);
-        renderTable(books);  
+        renderTable(books);
     } else {
         alert("Please enter valid details.");
     }
 };
+
 
 
 
